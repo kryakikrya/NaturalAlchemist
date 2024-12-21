@@ -6,11 +6,12 @@ TagManager:
   tags:
   - Slots
   - TrashSlot
+  - BoilerSlot
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Seeds
   - Water
   - UI
   - 
