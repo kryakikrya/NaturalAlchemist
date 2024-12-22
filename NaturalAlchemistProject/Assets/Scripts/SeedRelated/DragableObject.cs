@@ -9,20 +9,21 @@ public class DragableObject : MonoBehaviour
 {
     [HideInInspector] internal Transform parentAfterDrag;
     [SerializeField] internal bool source;
+    [SerializeField] internal bool CanGrab = true;
     [SerializeField] private Collider2D _collider;
     [SerializeField] private string _tag;
     [SerializeField] private string _trashtag;
     [SerializeField] private float ObjectPosAwayFromCamera = 7f;
     private void OnMouseDrag()
     {
-        if (_collider != null)
+        if (_collider != null && CanGrab)
         {
             transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + new Vector3(0, 0, ObjectPosAwayFromCamera); ;
         }
     }
     private void OnMouseDown()
     {
-        if (_collider != null)
+        if (_collider != null && CanGrab)
         {
             parentAfterDrag = transform.parent;
             if (source)
@@ -38,7 +39,7 @@ public class DragableObject : MonoBehaviour
     }
     private void OnMouseUp()
     {
-        if (_collider != null && ! source)
+        if (_collider != null && ! source && CanGrab)
         {
             _collider.enabled = false;
             Vector3 mousepos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, ObjectPosAwayFromCamera));
