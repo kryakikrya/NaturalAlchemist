@@ -9,12 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a030ee3e929b08419313423a8270db1, type: 3}
-  m_Name: Rain
+  m_Script: {fileID: 11500000, guid: d180f45853412c6479d1b05a73a6b784, type: 3}
+  m_Name: Air Potion
   m_EditorClassIdentifier: 
-  ComponentElements:
+  ComponentElement:
   - {fileID: 11400000, guid: 3c0e703e6836eaf48a2b7fdd3998ff88, type: 2}
-  - {fileID: 11400000, guid: 5b942f44193e33946a6c3cfb34903e00, type: 2}
-  Color: {r: 0.35408506, g: 0.66943544, b: 0.6886792, a: 0.7647059}
-  Sprite: {fileID: 2747690628134850419, guid: b670ab75dde984907b8570040daa08c5, type: 3}
-  ElementName: Rain
+  Color: {r: 1, g: 1, b: 1, a: 0.65882355}
+  Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  ElementName: Air Poison

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d180f45853412c6479d1b05a73a6b784, type: 3}
+  m_Name: Rain Potion
+  m_EditorClassIdentifier: 
+  ComponentElement:
+  - {fileID: 11400000, guid: 3c0e703e6836eaf48a2b7fdd3998ff88, type: 2}
+  - {fileID: 11400000, guid: 5b942f44193e33946a6c3cfb34903e00, type: 2}
+  Color: {r: 0.20358667, g: 0.6402756, b: 0.7075472, a: 0.5058824}
+  Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  ElementName: Rain Potion

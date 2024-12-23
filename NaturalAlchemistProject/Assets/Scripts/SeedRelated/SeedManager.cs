@@ -8,12 +8,12 @@ public class SeedManager : MonoBehaviour
 {
     [Header("Сетап")]
     [SerializeField] private Transform AlchemyTransform;
-    [SerializeField] private List<SeedElement> AvailableElements = new();
+    [SerializeField] private List<PotionClass> AvailableElements = new();
     [SerializeField] private Button CombineButton;
     [SerializeField] private GameObject SeedBasePrefab;
-    private SeedElement GetElementFromTransform(Transform _transform)
+    private PotionClass GetElementFromTransform(Transform _transform)
     {
-        SeedElement output = null;
+        PotionClass output = null;
         if (_transform != null && _transform.childCount > 0)
         {
             if (transform.childCount == 1)
@@ -21,18 +21,18 @@ public class SeedManager : MonoBehaviour
                 Transform child = _transform.GetChild(0);
                 if (child != null&&child.TryGetComponent<SeedClass>(out SeedClass clas)) 
                 {
-                    output = clas.element;
+                    output = clas.PotionElement;
                 }
 
             } else
             {
-                foreach (SeedElement element in AvailableElements)
+                foreach (PotionClass element in AvailableElements)
                 {
                     int counted = 0;
-                    int needed = element.ComponentElements.Count;
+                    int needed = element.ComponentElement.Count;
                     foreach (Transform child in _transform)
                     {
-                        if (child != null && child.TryGetComponent<SeedClass>(out SeedClass clas) && element.ComponentElements.Contains(clas.element))
+                        if (child != null && child.TryGetComponent<SeedClass>(out SeedClass clas) && element.ComponentElement.Contains(clas.SeedelEment))
                         {
                             counted++;
                             if (counted == needed)
@@ -52,13 +52,13 @@ public class SeedManager : MonoBehaviour
     {
         if (AlchemyTransform.childCount > 1)
         {
-            SeedElement element = GetElementFromTransform(AlchemyTransform);
+            PotionClass element = GetElementFromTransform(AlchemyTransform);
             if (element != null) 
             {
-                for (int i = 0; i < element.ComponentElements.Count; i++) 
+                for (int i = 0; i < element.ComponentElement.Count; i++) 
                 {
                     Transform child = AlchemyTransform.GetChild(i);
-                    if (child != null && child.TryGetComponent<SeedClass>(out SeedClass component) && element.ComponentElements.Contains(component.element))
+                    if (child != null && child.TryGetComponent<SeedClass>(out SeedClass component) && element.ComponentElement.Contains(component.SeedelEment))
                     {
                         Destroy(child.gameObject);
                     }
@@ -72,7 +72,7 @@ public class SeedManager : MonoBehaviour
                     return;
                 }
                 newobject.name = element.name;
-                seedClass.element = element;
+                seedClass.PotionElement = element;
             }
         }
     }

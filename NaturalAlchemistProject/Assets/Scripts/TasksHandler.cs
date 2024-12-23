@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TasksHandler : MonoBehaviour
 {
     [Header("Set-Up")]
-    [SerializeField] private List<Task> possibleTasks = new();
+    [SerializeField] private List<Task> possibleTasks;
     [SerializeField] private Transform slotTransform;
-    [SerializeField] private Task currentTask;
+    [SerializeField] private Task tutorialtask; 
     [SerializeField] private TMP_Text textLabel;
     [Header("Values")]
     [SerializeField] internal int MoneyLoseGain = 5;
@@ -18,12 +19,31 @@ public class TasksHandler : MonoBehaviour
     [SerializeField] internal float NewQueueWaitTime = 15f;
     internal int Money = 10;
     private Queue<Task> _tasks = new();
+    private Task currentTask;
     float timer = 10f;
 
+    private void Start()
+    {
+        if (tutorialtask.MaxTime >0)
+        {
+            currentTask = tutorialtask;
+            textLabel.text = tutorialtask.followuptext;
+            timer = tutorialtask.MaxTime;
+        }
+    }
     private Task GetNewTask()
     {
         int random = UnityEngine.Random.Range(0, possibleTasks.Count);
-        return possibleTasks[random];
+        Task pickedclass = possibleTasks[random];
+        Task randompotion = new Task();
+        randompotion.MaxTime = pickedclass.MaxTime;
+        randompotion.followuptext = pickedclass.followuptext;
+        randompotion.AcceptableElements = new();
+        foreach (PotionClass potion in pickedclass.AcceptableElements) 
+        {
+            randompotion.AcceptableElements.Add(potion);
+        }
+        return randompotion;
     }
     private void GenerateTasksList()
     {
@@ -45,6 +65,7 @@ public class TasksHandler : MonoBehaviour
         {
             if (currentTask != null)
             {
+                textLabel.text = "Task failed,you will get fined.\n Wait for a new task.";
                 currentTask = null;
                 Money -= MoneyLoseGain;
                 timer = BetweenTasksWaitTime;
@@ -56,21 +77,29 @@ public class TasksHandler : MonoBehaviour
                 { 
                     textLabel.text = currentTask.followuptext;
                 }
+                timer = currentTask.MaxTime;
             }
             else if (currentTask == null && _tasks.Count <= 0)
             {
                 GenerateTasksList();
             }
         } 
-        if (slotTransform.childCount > 0 && slotTransform.GetChild(0).TryGetComponent<SeedClass>(out SeedClass sclas) == true)
+        if (slotTransform.childCount > 0 &&  slotTransform.GetChild(0).TryGetComponent<SeedClass>(out SeedClass sclas) == true)
         {
-            if (sclas != null && currentTask.AcceptableElements.Contains(sclas.element)) 
+            if (sclas != null &&  sclas.PotionElement != null && currentTask.AcceptableElements.Contains(sclas.PotionElement)) 
             {
-                currentTask = null;
-                Money += MoneyLoseGain;
-                timer = BetweenTasksWaitTime;
+                if (currentTask.AcceptableElements.Count > 1)
+                {
+                    currentTask.AcceptableElements.Remove(sclas.PotionElement);
+                } else
+                {
+                    currentTask = null;
+                    textLabel.text = "Task completed.\nWait for a new task.";
+                    Money += MoneyLoseGain;
+                    timer = BetweenTasksWaitTime;
+                }
             }
-            Destroy(transform.GetChild(0).gameObject);
+            Destroy(slotTransform.GetChild(0).gameObject);
         }
     }
 }

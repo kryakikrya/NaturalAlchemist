@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class SeedClass : MonoBehaviour
 {
-    [SerializeField] internal SeedElement element;
+    [SerializeField] internal SeedElement SeedelEment;
+    [SerializeField] internal PotionClass PotionElement;
     [SerializeField] internal SpriteRenderer spriteRenderer;
 
     private void Update()
     {
-        if (element != null)
+        if (PotionElement != null)
         {
-            spriteRenderer.sprite = element.Sprite;
-            spriteRenderer.color = element.Color;
+            spriteRenderer.sprite = PotionElement.Sprite;
+            spriteRenderer.color = PotionElement.Color;
         }
+        else if (SeedelEment != null)
+        {
+            spriteRenderer.sprite = SeedelEment.Sprite;
+            spriteRenderer.color = SeedelEment.Color;
+        }
+
     }
 }

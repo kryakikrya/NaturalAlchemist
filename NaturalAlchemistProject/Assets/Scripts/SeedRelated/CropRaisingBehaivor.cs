@@ -16,7 +16,7 @@ public class CropRaisingBehaivor : MonoBehaviour
         clone.transform.localScale /= 4;
         DragableObject dobj = clone.GetComponent<DragableObject>();
         dobj.CanGrab = false;
-        clone.GetComponent<SeedClass>().element = currentclass;
+        clone.GetComponent<SeedClass>().SeedelEment = currentclass;
         yield return new WaitForSeconds(1);
         clone.transform.localScale *= 2;
         yield return new WaitForSeconds(1);
@@ -32,13 +32,12 @@ public class CropRaisingBehaivor : MonoBehaviour
             Transform child = transform.GetChild(0);
             if ( child != null && child.TryGetComponent<SeedClass>(out SeedClass classa))
             {
-                currentclass = classa.element;
+                currentclass = classa.SeedelEment;
             }
             canuse = false;
         } else if (transform.childCount == 0 && currentclass != null && currentcount > 0 && ! canuse)
         {
             currentcount--;
-            Debug.Log(currentcount.ToString());
             if (currentcount == 0) { currentclass = null; return; }
             StartCoroutine(grownewone());
         } else if (transform.childCount == 0 && currentclass == null && currentcount == 0)

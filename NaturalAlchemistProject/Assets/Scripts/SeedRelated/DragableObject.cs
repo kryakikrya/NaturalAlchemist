@@ -52,7 +52,7 @@ public class DragableObject : MonoBehaviour
                 {
                     Destroy(this.gameObject); 
                     return;
-                } else if ((hit.transform.CompareTag(_tag) && hit.transform.childCount == 0)||hit.transform.CompareTag("BoilerSlot") || hit.transform.CompareTag(_trashtag) && hit.transform.childCount <= 0) 
+                } else if (( hit.transform.CompareTag(_tag) && hit.transform.childCount == 0)||hit.transform.CompareTag("BoilerSlot") || hit.transform.CompareTag(_trashtag) && hit.transform.childCount <= 0) 
                 {
                     parentAfterDrag = hit.transform;
                     if (hit.transform.CompareTag(_trashtag))
