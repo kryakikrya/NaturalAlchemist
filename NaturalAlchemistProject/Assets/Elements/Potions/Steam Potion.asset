@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Steam Potion
   m_EditorClassIdentifier: 
   ComponentElement:
-  - {fileID: 11400000, guid: 3c0e703e6836eaf48a2b7fdd3998ff88, type: 2}
+  - {fileID: 11400000, guid: 5b942f44193e33946a6c3cfb34903e00, type: 2}
   - {fileID: 11400000, guid: 46b2e64cc5009b34c873fdc17a2788b1, type: 2}
   Color: {r: 0.5471698, g: 0.5471698, b: 0.5471698, a: 0.5058824}
   Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}

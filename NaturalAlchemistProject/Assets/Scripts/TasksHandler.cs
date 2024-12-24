@@ -11,19 +11,22 @@ public class TasksHandler : MonoBehaviour
     [SerializeField] private Transform slotTransform;
     [SerializeField] private Task tutorialtask; 
     [SerializeField] private TMP_Text textLabel;
+    [SerializeField] private GameObject WinFrame;
+    [SerializeField] private GameObject LooseFrame;
     [Header("Values")]
-    [SerializeField] internal int MoneyLoseGain = 5;
-    [SerializeField] internal int MaxQueueSize = 5;
-    [SerializeField] internal int MinQueueSize = 1;
     [SerializeField] internal float BetweenTasksWaitTime = 5f;
-    [SerializeField] internal float NewQueueWaitTime = 15f;
     internal int Money = 10;
     private Queue<Task> _tasks = new();
     private Task currentTask;
     float timer = 10f;
 
+
     private void Start()
     {
+        foreach (Task t in possibleTasks)
+        {
+            _tasks.Enqueue(t);
+        }
         if (tutorialtask.MaxTime >0)
         {
             currentTask = tutorialtask;
@@ -31,28 +34,16 @@ public class TasksHandler : MonoBehaviour
             timer = tutorialtask.MaxTime;
         }
     }
-    private Task GetNewTask()
+    private void WinGame()
     {
-        int random = UnityEngine.Random.Range(0, possibleTasks.Count);
-        Task pickedclass = possibleTasks[random];
-        Task randompotion = new Task();
-        randompotion.MaxTime = pickedclass.MaxTime;
-        randompotion.followuptext = pickedclass.followuptext;
-        randompotion.AcceptableElements = new();
-        foreach (PotionClass potion in pickedclass.AcceptableElements) 
-        {
-            randompotion.AcceptableElements.Add(potion);
-        }
-        return randompotion;
+        Time.timeScale = 0;
+        WinFrame.SetActive(true);
     }
-    private void GenerateTasksList()
+    private void LooseGame()
     {
-        int size = UnityEngine.Random.Range(MinQueueSize, MaxQueueSize+1);
-        for (int i = 0; i < size; i++)
-        {
-            Task newtask = GetNewTask();
-            if (newtask != null) _tasks.Enqueue(newtask);
-        }
+        Time.timeScale = 0;
+        LooseFrame.SetActive(true);
+
     }
 
     private void Update()
@@ -67,7 +58,7 @@ public class TasksHandler : MonoBehaviour
             {
                 textLabel.text = "Task failed,you will get fined.\n Wait for a new task.";
                 currentTask = null;
-                Money -= MoneyLoseGain;
+                Money -= 5;
                 timer = BetweenTasksWaitTime;
             }
             else if (currentTask == null && _tasks.Count > 0)
@@ -79,9 +70,13 @@ public class TasksHandler : MonoBehaviour
                 }
                 timer = currentTask.MaxTime;
             }
-            else if (currentTask == null && _tasks.Count <= 0)
+            else if (currentTask == null && _tasks.Count <= 0 && Money > 0)
             {
-                GenerateTasksList();
+                WinGame();
+            } 
+            if (Money <= 0)
+            {
+                LooseGame();
             }
         } 
         if (slotTransform.childCount > 0 &&  slotTransform.GetChild(0).TryGetComponent<SeedClass>(out SeedClass sclas) == true)
@@ -95,7 +90,7 @@ public class TasksHandler : MonoBehaviour
                 {
                     currentTask = null;
                     textLabel.text = "Task completed.\nWait for a new task.";
-                    Money += MoneyLoseGain;
+                    Money += 2;
                     timer = BetweenTasksWaitTime;
                 }
             }
