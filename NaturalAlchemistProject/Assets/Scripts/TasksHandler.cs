@@ -13,6 +13,8 @@ public class TasksHandler : MonoBehaviour
     [SerializeField] private TMP_Text textLabel;
     [SerializeField] private GameObject WinFrame;
     [SerializeField] private GameObject LooseFrame;
+    [SerializeField] private AudioSource WinSound;
+    [SerializeField] private AudioSource LoseSound;
     [Header("Values")]
     [SerializeField] internal float BetweenTasksWaitTime = 5f;
     internal int Money = 10;
@@ -56,6 +58,7 @@ public class TasksHandler : MonoBehaviour
         {
             if (currentTask != null)
             {
+                LoseSound.Play();
                 textLabel.text = "Task failed,you will get fined.\n Wait for a new task.";
                 currentTask = null;
                 Money -= 5;
@@ -89,6 +92,7 @@ public class TasksHandler : MonoBehaviour
                 } else
                 {
                     currentTask = null;
+                    WinSound.Play();
                     textLabel.text = "Task completed.\nWait for a new task.";
                     Money += 2;
                     timer = BetweenTasksWaitTime;

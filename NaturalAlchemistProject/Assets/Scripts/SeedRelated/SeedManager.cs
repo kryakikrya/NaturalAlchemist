@@ -6,11 +6,12 @@ using UnityEngine.UI;
 
 public class SeedManager : MonoBehaviour
 {
-    [Header("Сетап")]
+    [Header("Setup")]
     [SerializeField] private Transform AlchemyTransform;
     [SerializeField] private List<PotionClass> AvailableElements = new();
     [SerializeField] private Button CombineButton;
     [SerializeField] private GameObject SeedBasePrefab;
+    [SerializeField] private AudioSource PoisonAudio;
     private PotionClass GetElementFromTransform(Transform _transform)
     {
         PotionClass output = null;
@@ -65,6 +66,7 @@ public class SeedManager : MonoBehaviour
                 }
                 GameObject newobject = Instantiate(SeedBasePrefab, AlchemyTransform);
                 SeedClass seedClass = newobject.GetComponent<SeedClass>() ?? null;
+                PoisonAudio.Play();
                 if (seedClass == null )
                 {
                     Destroy(newobject);
